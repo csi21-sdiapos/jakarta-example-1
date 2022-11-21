@@ -2,10 +2,11 @@ package com.example;
 
 import java.io.IOException;
 
-import com.implementations.EmployeeImpl;
-import com.interfaces.EmployeeDAO;
 import com.models.Employee;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,13 +33,17 @@ public class HelloServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		EmployeeDAO employeeDAO = new EmployeeImpl(); // polimorfismo
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+		EntityManager em = emf.createEntityManager();
+		Employee employee1 = em.find(Employee.class, 1L);
+		System.out.println(employee1);
 		
-		Employee testEmployee = new Employee(null, "testEmployee", "44444444D", 18);
+		// EmployeeDAO employeeDAO = new EmployeeImpl(); // polimorfismo
+		// Employee testEmployee = new Employee(null, "testEmployee", "44444444D", 18);
+		// employeeDAO.create(testEmployee);
 		
-		employeeDAO.create(testEmployee);
-		
-		response.getWriter().append(employeeDAO.findAll().toString());
+		// response.getWriter().append(employeeDAO.findAll().toString());
+		response.getWriter().append("Hola Mundo");
 	}
 
 	/**

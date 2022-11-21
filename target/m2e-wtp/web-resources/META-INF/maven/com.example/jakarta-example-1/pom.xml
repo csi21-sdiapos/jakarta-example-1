@@ -63,13 +63,6 @@
 	    <version>1.2.5</version>
 	    <scope>runtime</scope>
 	</dependency>
-
-    <!-- ********************************* PostgreSQL ************************************* -->
-	<dependency>
-	    <groupId>org.postgresql</groupId>
-	    <artifactId>postgresql</artifactId>
-	    <version>42.5.0</version>
-	</dependency>
 	
 	<!-- ********************************* Spring ************************************* -->
 	<dependency>
@@ -132,7 +125,14 @@
 	    <version>2.3.1</version>
 	</dependency>
 	
-	<!-- ********************************* Hibernate ************************************* -->
+	<!-- ********************************* PostgreSQL ************************************* -->
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>42.5.0</version>
+	</dependency>
+	
+	<!-- ********************************* Jakarta ************************************* -->
 	<dependency>
 	    <groupId>jakarta.servlet</groupId>
 	    <artifactId>jakarta.servlet-api</artifactId>
@@ -197,18 +197,6 @@
 	
 	<!-- ********************************* Hibernate ************************************* -->
 	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-core</artifactId>
-		<version>${hibernate.version}</version>
-	</dependency>
-	
-	<dependency>
-		<groupId>org.hibernate</groupId>
-		<artifactId>hibernate-entitymanager</artifactId>
-		<version>${hibernate.version}</version>
-	</dependency>
-	
-	<dependency>
 	    <groupId>org.hibernate.validator</groupId>
 	    <artifactId>hibernate-validator</artifactId>
 	    <version>8.0.0.Final</version>
@@ -219,13 +207,19 @@
 	    <artifactId>hibernate-core</artifactId>
 	    <version>6.1.5.Final</version>
 	</dependency>
-
+	
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core-jakarta</artifactId>
+	    <version>5.6.14.Final</version>
+	</dependency>
+<!--
 	<dependency>
 	    <groupId>org.hibernate</groupId>
 	    <artifactId>hibernate-annotations</artifactId>
 	    <version>3.5.6-Final</version>
 	</dependency>
-
+-->
 	<dependency>
 	    <groupId>org.hibernate.javax.persistence</groupId>
 	    <artifactId>hibernate-jpa-2.1-api</artifactId>

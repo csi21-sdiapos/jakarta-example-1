@@ -16,6 +16,115 @@
 
 Creamos un artefacto con el arquetipo de webapps, le añadimos las dependencias al *pom.xml*, añadimos el JDK-19 al *build path*, y hacemos el *maven install* sobre el *pom.xml*, y actualizamos el proyecto con *maven --> update project*
 
+```xml
+<!-- ********************************* PostgreSQL ************************************* -->
+	<dependency>
+	    <groupId>org.postgresql</groupId>
+	    <artifactId>postgresql</artifactId>
+	    <version>42.5.0</version>
+	</dependency>
+	
+	<!-- ********************************* Jakarta ************************************* -->
+	<dependency>
+	    <groupId>jakarta.servlet</groupId>
+	    <artifactId>jakarta.servlet-api</artifactId>
+	    <version>6.0.0</version>
+	    <scope>provided</scope>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.servlet.jsp</groupId>
+	    <artifactId>jakarta.servlet.jsp-api</artifactId>
+	    <version>3.1.0</version>
+	    <scope>provided</scope>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.servlet.jsp.jstl</groupId>
+	    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+	    <version>3.0.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.annotation</groupId>
+	    <artifactId>jakarta.annotation-api</artifactId>
+	    <version>2.1.1</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.xml.bind</groupId>
+	    <artifactId>jakarta.xml.bind-api</artifactId>
+	    <version>4.0.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.inject</groupId>
+	    <artifactId>jakarta.inject-api</artifactId>
+	    <version>2.0.1</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.ws.rs</groupId>
+	    <artifactId>jakarta.ws.rs-api</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.validation</groupId>
+	    <artifactId>jakarta.validation-api</artifactId>
+	    <version>3.0.2</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.persistence</groupId>
+	    <artifactId>jakarta.persistence-api</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>jakarta.activation</groupId>
+	    <artifactId>jakarta.activation-api</artifactId>
+	    <version>2.1.0</version>
+	</dependency>
+	
+	<!-- ********************************* Hibernate ************************************* -->
+	<dependency>
+	    <groupId>org.hibernate.validator</groupId>
+	    <artifactId>hibernate-validator</artifactId>
+	    <version>8.0.0.Final</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.hibernate.orm</groupId>
+	    <artifactId>hibernate-core</artifactId>
+	    <version>6.1.5.Final</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-core-jakarta</artifactId>
+	    <version>5.6.14.Final</version>
+	</dependency>
+<!--
+	<dependency>
+	    <groupId>org.hibernate</groupId>
+	    <artifactId>hibernate-annotations</artifactId>
+	    <version>3.5.6-Final</version>
+	</dependency>
+-->
+	<dependency>
+	    <groupId>org.hibernate.javax.persistence</groupId>
+	    <artifactId>hibernate-jpa-2.1-api</artifactId>
+	    <version>1.0.2.Final</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.eclipse.persistence</groupId>
+	    <artifactId>org.eclipse.persistence.jpa</artifactId>
+	    <version>4.0.0</version>
+	</dependency>
+```
+
 ![](./img/7.png)
 
 **Nota**: también comprobamos la versión del *dynamic web module*.
@@ -538,4 +647,127 @@ public class EmployeeImpl implements EmployeeDAO{
 ![](./img/27.png)
 
 ![](./img/28.png)
+
+# 6. Conexión del proyecto con Hibernate
+
+![](./img/29.png)
+
+![](./img/30.png)
+
+![](./img/31.png)
+
+## 6.1. Cambiar el tipo de proyecto a JPA
+
+**Atención**: No hacer este paso, no es necesario, y de hacerlo, me da error el *persistence.xml*
+
+![](./img/32.png)
+
+![](./img/33.png)
+
+## 6.2. persistance.xml
+
+La acción de Project Face --> JPA nos ha creado una carpeta *META-INF*, y dentro de ella un archivo llamado *persistance.xml*...
+
+**Atención**: creamos nosotros mismos la carpeta META-INF dentro del paquete *src/main/java*. Y dentro de META-INF creamos un archivo xml llamado *persistence.xml*
+
+![](./img/34.png)
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8" standalone="yes"?> ............... el standalone hace que EntityManagerFactory no pueda reconocer el name de mi <persistence-unit> -->
+
+<persistence 
+	xmlns="https://jakarta.ee/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+    version="3.0"
+>
+    <persistence-unit name="default">
+
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/jakarta-example-1"/>
+            <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
+            <property name="hibernate.connection.username" value="postgres"/>
+            <property name="hibernate.connection.password" value="12345"/>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="create"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
+
+# 7. Entidades JPA
+
+![](./img/35.png)
+
+![](./img/36.png)
+
+![](./img/37.png)
+
+![](./img/38.png)
+
+![](./img/39.png)
+
+![](./img/40.png)
+
+```xml
+<dependency>
+	<groupId>org.hibernate</groupId>
+	<artifactId>hibernate-core-jakarta</artifactId>
+	<version>5.6.14.Final</version>
+</dependency>
+```
+
+**Nota**: *run as --> maven install*
+
+## 7.1. Añadir anotaciones al modelo Employee.java
+
+```java
+...
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "employees")
+public class Employee {
+
+	// ATRIBUTOS
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private String name;
+	private String nif;
+	private int age;
+...
+```
+
+## 7.2. EntityManagerFactory en el controlador de HelloServlet
+
+```java
+/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+		EntityManager em = emf.createEntityManager();
+		Employee employee1 = em.find(Employee.class, 1L);
+		System.out.println(employee1);
+		
+		// EmployeeDAO employeeDAO = new EmployeeImpl(); // polimorfismo
+		// Employee testEmployee = new Employee(null, "testEmployee", "44444444D", 18);
+		// employeeDAO.create(testEmployee);
+		
+		// response.getWriter().append(employeeDAO.findAll().toString());
+		response.getWriter().append("Hola Mundo");
+	}
+```
+
+![](./img/41.png)
 
