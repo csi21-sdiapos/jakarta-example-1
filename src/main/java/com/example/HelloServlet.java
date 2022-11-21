@@ -1,6 +1,10 @@
 package com.example;
 
 import java.io.IOException;
+import java.sql.Connection;
+
+import com.queries.ConsultasPostgreSql;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,6 +32,15 @@ public class HelloServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: Hello World");
+		
+		Connection conexionGenerada = null;
+		
+		try {
+			ConsultasPostgreSql.ConsultaSelectEmpleados(conexionGenerada);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 	/**
