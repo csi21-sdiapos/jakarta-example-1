@@ -1,9 +1,10 @@
 package com.example;
 
 import java.io.IOException;
-import java.sql.Connection;
 
-import com.queries.ConsultasPostgreSql;
+import com.implementations.EmployeeImpl;
+import com.interfaces.EmployeeDAO;
+import com.models.Employee;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -30,17 +31,14 @@ public class HelloServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: Hello World");
 		
-		Connection conexionGenerada = null;
+		EmployeeDAO employeeDAO = new EmployeeImpl(); // polimorfismo
 		
-		try {
-			ConsultasPostgreSql.ConsultaSelectEmpleados(conexionGenerada);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
+		Employee testEmployee = new Employee(null, "testEmployee", "44444444D", 18);
+		
+		employeeDAO.create(testEmployee);
+		
+		response.getWriter().append(employeeDAO.findAll().toString());
 	}
 
 	/**
