@@ -826,3 +826,136 @@ public class Employee {
 
 Si a priori, comentamos la parte del *delete* y ejecutamos el proyecto, podremos ver en pgAdmin que se ha creado un empleado. Y si después descomentamos el *delete* y lo volvemos a ejecutar, vemos que elimina tal empleado y se queda la tabla vacía.
 
+# 9. Capa DAO con JPA Hibernate
+
+![](./img/47.png)
+
+![](./img/48.png)
+
+![](./img/49.png)
+
+Vamos a abstraer la creación del contexto de EntityManager.
+
+Para ello, vamos a extraer las dos sentencias de código de nuestro *HelloServlet.java*, para llevárnoslas a una nueva clase (*com.example.tools --> JPAtools.java*) y al ponerlas como *static* las podremos volver a usar en el *HelloServlet*.
+
+## 9.1. com.example.tools --> JPAtools.java
+
+```java
+package com.tools;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
+
+public class JPAtools {
+
+	public static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+	// EntityManager em = emf.createEntityManager();
+	
+	public static EntityManager getEntityManager() {
+		return emf.createEntityManager();
+	}
+}
+```
+
+## EXTRA: Refactorización de la estructura del proyecto.
+
+Para una mejor orghanización, vamos a pararnos un momento a meter todos los paquetes dentro del principal de *com.example*.
+
+**Nota**: recuerda que nuestra vista de los archivos del proyecto está predeterminadamente en *flat*... si quieres, puedes cambiarla a *hierarchical*, pero ten en cuenta que la jerarquía parte de *com* y después de *example*.
+
+**Nota**: no olvides actualizar el nombre del WebServlet:
+```java
+/**
+ * Servlet implementation class HelloServlet
+ */
+@WebServlet(name = "com.example.controllers.HelloServlet", value = "/hello")
+public class HelloServlet extends HttpServlet {
+	...
+}
+```
+
+![](./img/50.png)
+
+## 9.2. com.example.implementations --> EmployeeJPAimpl.java
+
+```java
+package com.example.implementations;
+
+import java.util.List;
+
+import com.example.interfaces.EmployeeDAO;
+import com.example.models.Employee;
+import com.example.tools.JPAtools;
+
+import jakarta.persistence.EntityManager;
+
+public class EmployeeJPAimpl implements EmployeeDAO {
+
+	@Override
+	public List<Employee> findAll() {
+
+		EntityManager em = JPAtools.getEntityManager();
+		List<Employee> employeesList = em.createQuery("SELECT e FROM employees e", Employee.class).getResultList();
+		em.close();
+		
+		return employeesList;
+	}
+
+	@Override
+	public Employee findOne(Long id) {
+		
+		EntityManager em = JPAtools.getEntityManager();
+		Employee employee = em.find(Employee.class, id);
+		em.close();
+		System.out.println(employee);
+		
+		return employee;
+	}
+
+	@Override
+	public boolean create(Employee employee) {
+
+		EntityManager em = JPAtools.getEntityManager();
+		
+		em.getTransaction().begin();
+        em.persist(employee);
+        em.getTransaction().commit();
+	
+        return true;
+	}
+
+	@Override
+	public boolean update(Employee employee) {
+/*		
+		EntityManager em = JPAtools.getEntityManager();
+		Employee employee1 = null;
+		
+		em.getTransaction().begin();
+		employee1.setName(employee1.getName() + "_editado");
+		em.merge(employee);
+		em.getTransaction().commit();
+*/	
+		return false;
+	}
+
+	@Override
+	public boolean delete(Long id) {
+/*		
+		EntityManager em = JPAtools.getEntityManager();
+		
+		em.getTransaction().begin();
+		em.remove(employeeJPA);
+		em.getTransaction().commit();
+*/	
+		return false;
+	}	
+}
+```
+
+![](./img/51.png)
+
+![](./img/52.png)
+
+![](./img/53.png)
+
