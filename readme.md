@@ -771,3 +771,58 @@ public class Employee {
 
 ![](./img/41.png)
 
+# 8. Operaciones CRUD con JPA Hibernate
+
+![](./img/42.png)
+
+![](./img/43.png)
+
+![](./img/44.png)
+
+![](./img/45.png)
+
+![](./img/46.png)
+
+### HelloServlet.java
+
+```java
+/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+		EntityManager em = emf.createEntityManager();
+		
+		/********************************** persist (insert) ********************************/
+		em.getTransaction().begin();
+        Employee employeeJPA = new Employee(null, "EmployeeJPA", "hibernate", 30);
+        em.persist(employeeJPA);
+        em.getTransaction().commit();
+
+		/********************************** find (search) ********************************/
+		Employee employee1 = em.find(Employee.class, 1L);
+		System.out.println(employee1);
+		
+		/********************************** merge (update) ********************************/
+		em.getTransaction().begin();
+		employee1.setName(employee1.getName() + "_editado");
+		em.merge(employeeJPA);
+		em.getTransaction().commit();
+
+		// delete
+		em.getTransaction().begin();
+		em.remove(employeeJPA);
+		em.getTransaction().commit();
+		
+		// EmployeeDAO employeeDAO = new EmployeeImpl(); // polimorfismo
+		// Employee testEmployee = new Employee(null, "testEmployee", "44444444D", 18);
+		// employeeDAO.create(testEmployee);
+		
+		// response.getWriter().append(employeeDAO.findAll().toString());
+		response.getWriter().append("Hola Mundo");
+	}
+```
+
+Si a priori, comentamos la parte del *delete* y ejecutamos el proyecto, podremos ver en pgAdmin que se ha creado un empleado. Y si después descomentamos el *delete* y lo volvemos a ejecutar, vemos que elimina tal empleado y se queda la tabla vacía.
+
