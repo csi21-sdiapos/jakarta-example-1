@@ -1239,6 +1239,14 @@ public class EmployeeServlet extends HttpServlet {
 
 # 13. API JAX-RS con Jersey
 
+![](./img/70.png)
+
+![](./img/71.png)
+
+![](./img/72.png)
+
+![](./img/73.png)
+
 ## 13.1. Añadimos las dependencias necesarias al *pom.xml*
 
 ```xml
@@ -1385,4 +1393,6 @@ public class StudentResource {
 	}
 }
 ```
+
+![](./img/74.png)
 
