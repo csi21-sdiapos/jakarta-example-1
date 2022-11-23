@@ -1237,3 +1237,152 @@ public class EmployeeServlet extends HttpServlet {
 
 ![](./img/69.png)
 
+# 13. API JAX-RS con Jersey
+
+## 13.1. Añadimos las dependencias necesarias al *pom.xml*
+
+```xml
+<!-- ********************************* Jersey ************************************* -->
+	<dependency>
+	    <groupId>jakarta.ws.rs</groupId>
+	    <artifactId>jakarta.ws.rs-api</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.containers</groupId>
+	    <artifactId>jersey-container-servlet</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.inject</groupId>
+	    <artifactId>jersey-hk2</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.core</groupId>
+	    <artifactId>jersey-client</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.core</groupId>
+	    <artifactId>jersey-server</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.media</groupId>
+	    <artifactId>jersey-media-json-jackson</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.core</groupId>
+	    <artifactId>jersey-common</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+
+	<dependency>
+	    <groupId>org.glassfish.jersey.media</groupId>
+	    <artifactId>jersey-media-multipart</artifactId>
+	    <version>3.1.0</version>
+	</dependency>
+```
+
+## 13.2. Creamos un nuevo modelo
+
+### com.example.models --> Student.java
+
+```java
+package com.example.models;
+
+import java.io.Serializable;
+
+public class Student implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+
+	private String name;
+	private int age;
+	
+	public Student(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+	
+	public Student() {
+		super();
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	@Override
+	public String toString() {
+		return "\nStudent [name=" + name + ", age=" + age + "]";
+	}	
+}
+```
+
+## 13.3. com.example.api --> App.java
+
+```java
+package com.example.api;
+
+import jakarta.ws.rs.ApplicationPath;
+import jakarta.ws.rs.core.Application;
+
+@ApplicationPath("api")
+public class App extends Application {
+
+}
+```
+
+## 13.4. com.example.resources --> StudentResource.java
+
+```java
+package com.example.resources;
+
+import java.util.List;
+
+import com.example.models.Student;
+
+import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+
+@Path("/students") // esta API sería un endpoint
+@Produces("application/json")
+@Consumes("application/json")
+public class StudentResource {
+
+	@GET
+	public List<Student> findAll() {
+		
+		return List.of
+				(
+					new Student("Estudiante1", 20),
+					new Student("Estudiante2", 30)
+				);
+	}
+}
+```
+

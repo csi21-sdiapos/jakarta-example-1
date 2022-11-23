@@ -3,7 +3,9 @@ C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\tools\JPAtools.java
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\implementations\EmployeeImpl.java
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\models\Employee.java
+C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\services\EmployeeService.java
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\queries\ConsultasPostgreSql.java
+C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\implementations\EmployeeServiceImpl.java
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\controllers\EmployeeServlet.java
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\tools\VariablesConexionPostgreSql.java
 C:\Users\Sergio DC\eclipse-workspace\jakarta-example-1\src\main\java\com\example\controllers\HelloServlet.java
