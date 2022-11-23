@@ -1396,3 +1396,40 @@ public class StudentResource {
 
 ![](./img/74.png)
 
+# 14. Capa vista con JSP/JSTL/JSF
+
+## 14.1. Etiquetas JSP
+
+![](./img/75.png)
+
+![](./img/76.png)
+
+![](./img/77.png)
+
+![](./img/78.png)
+
+![](./img/79.png)
+
+![](./img/80.png)
+
+### src --> main --> webapps --> hello.jsp
+
+```html
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+</head>
+<body>
+	<% out.println("Hola Mundo desde JSP"); %>	
+</body>
+</html>
+```
+
+![](./img/81.png)
+
+![](./img/82.png)
+
