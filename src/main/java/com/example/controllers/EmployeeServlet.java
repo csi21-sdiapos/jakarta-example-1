@@ -2,6 +2,10 @@ package com.example.controllers;
 
 import java.io.IOException;
 
+import com.example.implementations.EmployeeServiceImpl;
+import com.example.models.Employee;
+import com.example.services.EmployeeService;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -13,8 +17,11 @@ import jakarta.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "com.example.controllers.EmployeeServlet", value = "/employees")
 public class EmployeeServlet extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
-       
+    
+	private EmployeeService employeeService = new EmployeeServiceImpl();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -36,10 +43,14 @@ public class EmployeeServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String email = request.getParameter("email");
 		String name =  request.getParameter("name");
+		String nif = request.getParameter("nif");
+		int age = Integer.valueOf(request.getParameter("age"));
+
+		Employee employee = new Employee(null, name, nif, age);
+		this.employeeService.create(employee);
 		
-		System.out.println(email + " - " + name);
+		System.out.println(name + " - " + nif + " - " + age);
 	}
 
 }

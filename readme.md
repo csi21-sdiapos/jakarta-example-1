@@ -1108,3 +1108,132 @@ public class EmployeeServlet extends HttpServlet {
 </html>
 ```
 
+# 12. Conectar el servlet con la capa DAO a través de un servicio.
+
+![](./img/65.png)
+
+![](./img/66.png)
+
+## 12.1. com.example.services --> EmployeeService.java (interfaz)
+
+```java
+package com.example.services;
+
+import com.example.models.Employee;
+
+public interface EmployeeService {
+
+	boolean create(Employee employee);
+}
+```
+
+## 12.2. com.example.implementations --> EmployeeServiceImpl.java
+
+```java
+package com.example.implementations;
+
+import com.example.interfaces.EmployeeDAO;
+import com.example.models.Employee;
+import com.example.services.EmployeeService;
+
+public class EmployeeServiceImpl implements EmployeeService{
+
+	private EmployeeDAO employeeDAO;
+	
+	public EmployeeServiceImpl() {
+		this.employeeDAO = new EmployeeJPAimpl();
+	}
+
+	@Override
+	public boolean create(Employee employee) {
+
+		return this.employeeDAO.create(employee);
+	}
+}
+```
+
+**Nota**: comprueba que tienes hecho el método create() de la clase EmployeeJPAimpl.
+
+## 12.3. Actualizamos el EmployeeServlet
+
+```java
+/**
+ * Servlet implementation class EmployeeServlet
+ */
+@WebServlet(name = "com.example.controllers.EmployeeServlet", value = "/employees")
+public class EmployeeServlet extends HttpServlet {
+
+	private static final long serialVersionUID = 1L;
+    
+	private EmployeeService employeeService = new EmployeeServiceImpl();
+	
+    ...
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String name =  request.getParameter("name");
+		String nif = request.getParameter("nif");
+		int age = Integer.valueOf(request.getParameter("age"));
+
+		Employee employee = new Employee(null, name, nif, age);
+		this.employeeService.create(employee);
+		
+		System.out.println(name + " - " + nif + " - " + age);
+	}
+}
+```
+
+## 12.4. Actualizamos el index.html
+
+```html
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- ------------------------------------------- BOOTSTRAP ------------------------------------------- -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+	<title>Title Page</title>
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<form action="http://localhost:8080/jakarta-example-1/employees" method="post">
+				<div class="mb-3">
+				    <label for="name" class="form-label">Name</label>
+				    <input name="name" type="text" class="form-control" id="name">
+				  </div>
+				  <div class="mb-3">
+				    <label for="nif" class="form-label">NIF</label>
+				    <input name="nif" type="text" class="form-control" id="nif">
+				  </div>
+				  <div class="mb-3">
+				    <label for="age" class="form-label">Age</label>
+				    <input name="age" type="text" class="form-control" id="age">
+				  </div>
+				  <button type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- --------------------------------------------- SCRIPTS ------------------------------------------ -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>   
+</body>
+
+</html>
+```
+
+![](./img/67.png)
+
+![](./img/68.png)
+
+![](./img/69.png)
+
