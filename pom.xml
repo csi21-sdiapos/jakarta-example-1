@@ -146,11 +146,19 @@
 	    <version>3.1.0</version>
 	    <scope>provided</scope>
 	</dependency>
-
+	
+<!--
 	<dependency>
 	    <groupId>jakarta.servlet.jsp.jstl</groupId>
 	    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
 	    <version>3.0.0</version>
+	</dependency>
+-->
+	<!-- para usar las etiquetas de jstl, tenemos que quitar la dependencia de jakarta.servlet.jsp-api para instalar ahora la de jakarta.servlet.jsp.jstl (sin api, la de glashhfish de eclipse) -->
+	<dependency>
+	    <groupId>org.glassfish.web</groupId>
+	    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+	    <version>3.0.1</version>
 	</dependency>
 
 	<dependency>

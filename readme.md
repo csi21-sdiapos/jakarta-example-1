@@ -1433,3 +1433,43 @@ public class StudentResource {
 
 ![](./img/82.png)
 
+# 15. Etiquetas JSTL
+
+![](./img/83.png)
+
+![](./img/84.png)
+
+![](./img/85.png)
+
+![](./img/86.png)
+
+![](./img/87.png)
+
+## 15.1. pom.xml
+
+```xml
+<!--
+	<dependency>
+	    <groupId>jakarta.servlet.jsp.jstl</groupId>
+	    <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
+	    <version>3.0.0</version>
+	</dependency>
+-->
+	<!-- para usar las etiquetas de jstl, tenemos que quitar la dependencia de jakarta.servlet.jsp-api para instalar ahora la de jakarta.servlet.jsp.jstl (sin api, la de glashhfish de eclipse) -->
+	<dependency>
+	    <groupId>org.glassfish.web</groupId>
+	    <artifactId>jakarta.servlet.jsp.jstl</artifactId>
+	    <version>3.0.1</version>
+	</dependency>
+```
+
+## 15.2. Las cinco etiquetas de JSTL
+
+```html
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml" %>
+<%@ taglib prefix="sql" uri="http://java.sun.com/jsp/jstl/sql" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+```
+
